@@ -15,29 +15,61 @@ import { ActivatedRoute, RouterLink, Router } from '@angular/router';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent {
-  selectedType?: string
+  selectedType?: string;
+  searchTerm?: string;
+  propertyTypes: string[] = [];
   properties: Properties[] = [];
 
   constructor(private propertyService: PropertyService, private activateRoute: ActivatedRoute, private router: Router) {
-    // Assuming you have an instance of PropertyService available
-    this.properties = propertyService.getAll(); // Use the getAll method to get all properties
+    this.properties = propertyService.getAll();
+    this.propertyTypes = this.getPropertyTypes();
+  }
+
+  getPropertyTypes(): string[] {
+    const types: Set<string> = new Set<string>();
+    this.properties.forEach((property) => {
+      if (property.realEstateProperties?.type) {
+        types.add(property.realEstateProperties.type);
+      }
+      if (property.industrialMachines?.type) {
+        types.add(property.industrialMachines.type);
+      }
+      if (property.sales?.buyer) {
+        types.add(property.sales.buyer);
+      }
+      if (property.leases?.tenant) {
+        types.add(property.leases.tenant);
+      }
+    });
+    return ['All', ...Array.from(types)];
   }
 
   ngOnInit(): void {
     this.activateRoute.params.subscribe((params) => {
       if (params['searchTerm']) {
-        this.properties = this.propertyService.getBySearchTerm(params['searchTerm']);
+        this.searchTerm = params['searchTerm'];
+        this.search();
       } else if (params['type']) {
-        this.filterByTag(params['type']);
+        this.filterByType(params['type']);
       } else {
         this.properties = this.propertyService.getAll();
       }
     });
   }
 
-  filterByTag(type: string): void {
+  filterByType(type: string): void {
     this.selectedType = type;
-    this.properties = this.propertyService.getByType(type);
+    if (type === 'All') {
+      this.properties = this.propertyService.getAll();
+    } else {
+      this.properties = this.propertyService.getByType(type);
+    }
+  }
+
+  search(): void {
+    if (this.searchTerm) {
+      this.properties = this.propertyService.getBySearchTerm(this.searchTerm);
+    }
   }
   
 }

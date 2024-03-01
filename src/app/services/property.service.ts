@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { RealEstateProperty } from '../models/real-estate-property';
-import realEstateProperties from '../../datas/real-estate-data';
 import { Properties } from '../models/property-model';
 import properties from '../../datas/properties-data';
 

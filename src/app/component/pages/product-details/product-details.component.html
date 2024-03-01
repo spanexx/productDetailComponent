@@ -1,1 +1,49 @@
-<p>product-details works!</p>
+<!-- product-details.component.html -->
+<div class="product-details-container">
+    <div class="product-image">
+        <img [src]="property?.identifier.imageUrl" alt="Property Image">
+    </div>
+    <div class="product-details">
+        <h3>{{ property?.identifier.name }}</h3>
+        <p>{{ property?.identifier.description }}</p>
+        <div class="additional-details">
+            <p><strong>Type:</strong> <span [ngClass]="{'real-estate': property?.realEstateProperties, 'industrial': property?.industrialMachines, 'sale': property?.sales, 'lease': property?.leases}">{{ getPropertyType(property) }}</span></p>
+            <p><strong>Value:</strong> ${{ property?.value }}</p>
+
+            <!-- Display additional details based on property type -->
+            <ng-container *ngIf="property?.realEstateProperties">
+                <!-- Add any specific styling for real estate -->
+                <p class="real-estate"><strong>Bedrooms:</strong> {{ property?.realEstateProperties?.bedrooms }}</p>
+                <p class="real-estate"><strong>Bathrooms:</strong> {{ property?.realEstateProperties?.bathrooms }}</p>
+                <p class="real-estate"><strong>Garage:</strong> {{ property?.realEstateProperties?.hasGarage ? 'Yes' : 'No' }}</p>
+            </ng-container>
+
+            <ng-container *ngIf="property?.industrialMachines">
+                <!-- Add any specific styling for industrial machines -->
+                <p class="industrial"><strong>Condition:</strong> {{ property?.industrialMachines?.condition }}</p>
+                <p class="industrial"><strong>Weight:</strong> {{ property?.industrialMachines?.weight }} kg</p>
+                <p class="industrial"><strong>Manufacturer:</strong> {{ property?.industrialMachines?.manufacturer }}</p>
+                <p class="industrial"><strong>Production Year:</strong> {{ property?.industrialMachines?.productionYear }}</p>
+            </ng-container>
+
+            <ng-container *ngIf="property?.sales">
+                <!-- Add any specific styling for sales -->
+                <p class="sale"><strong>Buyer:</strong> {{ property?.sales?.buyer }}</p>
+                <p class="sale"><strong>Price:</strong> ${{ property?.sales?.price }}</p>
+                <p class="sale"><strong>Date:</strong> {{ property?.sales?.date | date }}</p>
+                <p class="sale"><strong>Payment Method:</strong> {{ property?.sales?.paymentMethod }}</p>
+                <p class="sale"><strong>Closing Date:</strong> {{ property?.sales?.closingDate | date }}</p>
+            </ng-container>
+
+            <ng-container *ngIf="property?.leases">
+                <!-- Add any specific styling for leases -->
+                <p class="lease"><strong>Tenant:</strong> {{ property?.leases?.tenant }}</p>
+                <p class="lease"><strong>Monthly Rent:</strong> ${{ property?.leases?.monthlyRent }}</p>
+                <p class="lease"><strong>Start Date:</strong> {{ property?.leases?.startDate | date }}</p>
+                <p class="lease"><strong>End Date:</strong> {{ property?.leases?.endDate | date }}</p>
+                <p class="lease"><strong>Lease Type:</strong> {{ property?.leases?.leaseType }}</p>
+                <p class="lease"><strong>Renewable:</strong> {{ property?.leases?.isRenewable ? 'Yes' : 'No' }}</p>
+            </ng-container>
+        </div>
+    </div>
+</div>

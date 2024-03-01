@@ -1,7 +1,15 @@
 <!-- product-list.component.html -->
+<div class="search-container">
+  <input [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}" placeholder="Search" (input)="search()">
+</div>
+
+<div class="type-filter">
+  <p *ngFor="let type of propertyTypes" (click)="filterByType(type)">{{ type }}</p>
+</div>
+
 <div class="property-container">
-  <div class="property-card" *ngFor="let property of properties" >
-    <a routerLink="{{property.identifier.id}}">
+
+  <div class="property-card" *ngFor="let property of properties" [routerLink]="['/property', property.identifier.id]">
     <div class="card-image">
       <img [src]="property.identifier.imageUrl" alt="Property Image">
     </div>
@@ -13,6 +21,5 @@
         <p><strong>Value:</strong> ${{ property.value }}</p>
       </div>
     </div>
-  </a>
   </div>
 </div>
