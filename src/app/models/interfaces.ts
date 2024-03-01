@@ -1,5 +1,12 @@
 // interfaces.ts
+export interface Identifier{
+  id: string;
+  name: string;
+  description: string;
+  imageUrl: string;
+  value: number;
 
+}
 export interface Address {
     street: string;
     city: string;
@@ -9,10 +16,6 @@ export interface Address {
   }
   
   export interface Property {
-    id: string;
-    address: Address;
-    value: number;
-    imageUrl: string;
     type: 'Residential' | 'Commercial' | 'Industrial';
     bedrooms?: number;
     bathrooms?: number;
@@ -20,19 +23,15 @@ export interface Address {
   }
   
   export interface Machine {
-    id: string;
-    name: string;
-    manufacturer: string;
-    productionYear: number;
-    imageUrl: string;
-    value: number;
     type: 'Heavy Machinery' | 'Construction Equipment' | 'Industrial Tool';
     condition?: 'New' | 'Used' | 'Refurbished';
     weight?: number;
+    model: string;
+    manufacturer: string;
+    productionYear: number;
   }
   
   export interface Sale {
-    propertyId: string;
     buyer: string;
     price: number;
     date: Date;
@@ -42,7 +41,6 @@ export interface Address {
   }
   
   export interface Lease {
-    propertyId: string;
     tenant: string;
     monthlyRent: number;
     startDate: Date;

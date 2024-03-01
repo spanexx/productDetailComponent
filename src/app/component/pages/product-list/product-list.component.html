@@ -1,0 +1,18 @@
+<!-- product-list.component.html -->
+<div class="property-container">
+  <div class="property-card" *ngFor="let property of properties" >
+    <a routerLink="{{property.identifier.id}}">
+    <div class="card-image">
+      <img [src]="property.identifier.imageUrl" alt="Property Image">
+    </div>
+    <div class="card-details">
+      <h3>{{ property.identifier.name }}</h3>
+      <p>{{ property.identifier.description }}</p>
+      <div class="additional-details">
+        <p><strong>Type:</strong> {{ property.realEstateProperties?.type || property.industrialMachines?.type || property.leases?.leaseType }}</p>
+        <p><strong>Value:</strong> ${{ property.value }}</p>
+      </div>
+    </div>
+  </a>
+  </div>
+</div>
